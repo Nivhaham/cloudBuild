@@ -1,9 +1,21 @@
+// Revision 1
+// const http = require('http');
+// const port = process.env.PORT || 8080;
+
+// http.createServer((req, res) => {
+//   res.writeHead(200, { 'Content-Type': 'text/plain' });
+//   res.end('Hello from Cloud Run practice!\n');
+// }).listen(port, () => {
+//   console.log(`Server running on port ${port}`);
+// });
+
+// Revision 2
 const http = require('http');
 const port = process.env.PORT || 8080;
 
 http.createServer((req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Hello from Cloud Run practice!\n');
+  res.end('Hello from Cloud Run practice! Version 2\n');
 }).listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
