@@ -17,14 +17,16 @@ steps:
     id: 'push-image'
     waitFor: ['build-image']
 
-  - name: 'hashicorp/terraform:1.9'
-    entrypoint: 'sh'
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
     args:
-      - '-c'
-      - |
-        cd day4-cloudrun
-        terraform init
-        terraform apply -auto-approve -var="project_id=$PROJECT_ID" -var="image_tag=$_TAG"
+      - 'run'
+      - 'deploy'
+      - 'practice-service'
+      - '--image=us-central1-docker.pkg.dev/$PROJECT_ID/practice-repo/app:$_TAG'
+      - '--region=us-central1'
+      - '--service-account=cloud-run-runtime@$PROJECT_ID.iam.gserviceaccount.com'
+      - '--quiet'
     id: 'deploy'
     waitFor: ['push-image']
 
