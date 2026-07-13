@@ -17,6 +17,17 @@ steps:
     id: 'push-image'
     waitFor: ['build-image']
 
+  - name: 'hashicorp/terraform:1.9'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        cd day4-cloudrun
+        terraform init
+        terraform apply -auto-approve -var="project_id=$PROJECT_ID" -var="image_tag=$_TAG"
+    id: 'deploy'
+    waitFor: ['push-image']
+
 images:
   - 'us-central1-docker.pkg.dev/$PROJECT_ID/practice-repo/app:$_TAG'
 
